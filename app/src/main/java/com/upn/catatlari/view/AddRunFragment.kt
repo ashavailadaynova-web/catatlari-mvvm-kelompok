@@ -5,7 +5,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
+import androidx.navigation.fragment.findNavController
 import com.upn.catatlari.databinding.FragmentAddRunBinding
+import com.upn.catatlari.model.Run
+import com.upn.catatlari.viewmodel.RunViewModel
 
 class AddRunFragment : Fragment() {
 
@@ -19,10 +23,18 @@ class AddRunFragment : Fragment() {
         return binding.root
     }
 
-    override fun onCreateCreated(View: View, savedInstanceState: Bundle?): {
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        // Inflate the layout for this fragment
-        binding = btnSaveRun.setOnClickListener{
-            val runDate
+
+        binding.btnSaveRun.setOnClickListener {
+            val runDate = binding.etDate.text.toString()
+            val runDuration = binding.etRunDuration.text.toString()
+            val runDistance = binding.etRunDistance.text.toString()
+
+            val runInput = Run(runDate = runDate, runDuration = runDuration.toInt(), runDistance = runDistance.toInt())
+
+            runViewModel.addRun(runInput)
+            findNavController().popBackStack() // kembali ke halaman sebelumnya
         }
+    }
 }
