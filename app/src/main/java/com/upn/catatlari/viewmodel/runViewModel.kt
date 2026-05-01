@@ -32,5 +32,14 @@ class RunViewModel : ViewModel() {
     // UPDATE
 
     // DELETE
+    fun deleteRun(run: Run) {
+        // 1. Ambil list saat ini dari LiveData, jika null buat list kosong
+        val currentList = runListLiveData.value.orEmpty().toMutableList()
 
+        // 2. Hapus data 'run' yang dipilih dari list
+        currentList.remove(run)
+
+        // 3. Update kembali nilai LiveData agar UI tahu ada data yang dihapus
+        runListLiveData.value = currentList
+    }
 }
