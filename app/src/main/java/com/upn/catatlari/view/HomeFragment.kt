@@ -6,16 +6,14 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
-import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.upn.catatlari.databinding.FragmentHomeBinding
-import com.upn.catatlari.model.Run
 import com.upn.catatlari.viewmodel.RunViewModel
 
 class HomeFragment : Fragment() {
 
-    private lateinit var  binding: FragmentHomeBinding
+    private lateinit var binding: FragmentHomeBinding
     private val runViewModel: RunViewModel by activityViewModels()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -29,11 +27,19 @@ class HomeFragment : Fragment() {
             findNavController().navigate(HomeFragmentDirections.Companion.actionHomeFragmentToAddRunFragment())
         }
 
-        val runAdapter = RunAdapter { runToEdit ->
-            // 1. Ambil data yang di-klik (runToEdit)
-            // 2. Kirim data tersebut ke ViewModel untuk diproses
-            runViewModel.updateRun(runToEdit, 0) // 0 adalah posisi/index yang akan di-update
+        // Inisialisasi Adapter dengan dua aksi (Hapus otomatis dari ViewModel, Edit diarahkan dengan Navigation)
+        val runAdapter = RunAdapter(runViewModel) { runToEdit ->
+            // Aksi saat tombol Edit di-klik
+            val action = HomeFragmentDirections.actionHomeFragmentToAddRunFragment()
+            findNavController().navigate(action)
         }
+
+        binding.rvRunList.layoutManager = LinearLayoutManager(requireContext())
+        runViewModel.runHistory.observe(viewLifecycleOwner) { runList ->
+            runAdapter.setData(runList)
+        }
+
+        binding.rvRunList.adapter = runAdapter
 
         binding.rvRunList.layoutManager = LinearLayoutManager(requireContext())
         runViewModel.runHistory.observe(viewLifecycleOwner) { runList ->

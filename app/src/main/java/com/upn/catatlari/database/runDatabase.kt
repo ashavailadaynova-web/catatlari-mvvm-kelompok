@@ -1,6 +1,5 @@
 package com.upn.catatlari.database
 
-import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
@@ -15,7 +14,7 @@ abstract class RunDatabase : RoomDatabase() {
         @Volatile
         private var INSTANCE: RunDatabase? = null
 
-        fun getDatabase(context: Context): RunDatabase {
+        fun getDatabase(context: RunDao): RunDatabase {
             return INSTANCE ?: synchronized(this) {
                 val instance = Room.databaseBuilder(
                     context.applicationContext,
