@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.upn.catatlari.databinding.FragmentHomeBinding
@@ -14,7 +15,7 @@ import com.upn.catatlari.viewmodel.RunViewModel
 
 class HomeFragment : Fragment() {
 
-    private lateinit var binding: FragmentHomeBinding
+    private lateinit var  binding: FragmentHomeBinding
     private val runViewModel: RunViewModel by activityViewModels()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -28,7 +29,11 @@ class HomeFragment : Fragment() {
             findNavController().navigate(HomeFragmentDirections.Companion.actionHomeFragmentToAddRunFragment())
         }
 
-        val runAdapter = RunAdapter()
+        val runAdapter = RunAdapter { runToEdit ->
+            // 1. Ambil data yang di-klik (runToEdit)
+            // 2. Kirim data tersebut ke ViewModel untuk diproses
+            runViewModel.updateRun(runToEdit, 0) // 0 adalah posisi/index yang akan di-update
+        }
 
         binding.rvRunList.layoutManager = LinearLayoutManager(requireContext())
         runViewModel.runHistory.observe(viewLifecycleOwner) { runList ->

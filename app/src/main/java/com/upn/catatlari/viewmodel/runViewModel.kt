@@ -30,7 +30,13 @@ class RunViewModel : ViewModel() {
     // READ
 
     // UPDATE
-
+    fun updateRun(updatedRun: Run, index: Int) {
+        val currentList = runListLiveData.value.orEmpty().toMutableList()
+        if (index >= 0 && index < currentList.size){
+            currentList[index] = updatedRun
+            runListLiveData.value = currentList
+        }
+    }
     // DELETE
 
 }
