@@ -29,6 +29,10 @@ class RunViewModel : ViewModel() {
 
     // READ
 
+    fun getRuns(): LiveData<List<Run>> {
+        return runHistory
+    }
+
     // UPDATE
     fun updateRun(updatedRun: Run, index: Int) {
         val currentList = runListLiveData.value.orEmpty().toMutableList()
