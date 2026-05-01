@@ -29,6 +29,10 @@ class RunViewModel : ViewModel() {
 
     // READ
 
+    fun getRuns(): LiveData<List<Run>> {
+        return runHistory
+    }
+
     // UPDATE
 
     // DELETE
