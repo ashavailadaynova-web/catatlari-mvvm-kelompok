@@ -10,28 +10,36 @@ import com.upn.catatlari.databinding.FragmentWelcomeBinding
 
 class WelcomeFragment : Fragment() {
 
-    private lateinit var binding: FragmentWelcomeBinding
+    private var _binding: FragmentWelcomeBinding? = null
+    private val binding get() = _binding!!
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
-        // Inflate the layout for this fragment
-        binding = FragmentWelcomeBinding.inflate(inflater, container, false)
-
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
+        _binding = FragmentWelcomeBinding.inflate(inflater, container, false)
         return binding.root
     }
-
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        binding.btnLogin.setOnClickListener {
-            findNavController().navigate(
-                WelcomeFragmentDirections.actionWelcomeFragmentToLoginFragment())
+        // Aksi tombol Signup (Get Started)
+        binding.btnSignup.setOnClickListener {
+            val action = WelcomeFragmentDirections.actionWelcomeFragmentToRegisterFragment()
+            findNavController().navigate(action)
         }
 
-        binding.btnSignup.setOnClickListener {
-            findNavController().navigate(
-                WelcomeFragmentDirections.actionWelcomeFragmentToRegisterFragment()
-            )
+        // Aksi tombol Login
+        binding.btnLogin.setOnClickListener {
+            val action = WelcomeFragmentDirections.actionWelcomeFragmentToLoginFragment()
+            findNavController().navigate(action)
         }
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 }

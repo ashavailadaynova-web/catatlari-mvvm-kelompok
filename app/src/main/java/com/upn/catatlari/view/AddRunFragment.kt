@@ -14,27 +14,48 @@ import com.upn.catatlari.viewmodel.RunViewModel
 class AddRunFragment : Fragment() {
 
     private lateinit var binding: FragmentAddRunBinding
-    val runViewModel: RunViewModel by activityViewModels()
+    private val runViewModel: RunViewModel by activityViewModels()
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
-        // Inflate the layout for this fragment
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
         binding = FragmentAddRunBinding.inflate(inflater, container, false)
-
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        // Logika Tombol Kembali
+        binding.btnBack.setOnClickListener {
+            findNavController().popBackStack()
+        }
+
+        // Logika Tombol Simpan
         binding.btnSaveRun.setOnClickListener {
             val runDate = binding.etDate.text.toString()
-            val runDuration = binding.etRunDuration.text.toString()
-            val runDistance = binding.etRunDistance.text.toString()
+            val runDurationStr = binding.etRunDuration.text.toString()
+            val runDistanceStr = binding.etRunDistance.text.toString()
 
-            val runInput = Run(runDate = runDate, runDuration = runDuration.toInt(), runDistance = runDistance.toInt())
+            // Validasi sederhana agar tidak error saat convert to Int
+            if (runDate.isNotEmpty() && runDurationStr.isNotEmpty() && runDistanceStr.isNotEmpty()) {
 
-            runViewModel.addRun(runInput)
-            findNavController().popBackStack() // kembali ke halaman sebelumnya
+                val runInput = Run(
+                    runDate = runDate,
+                    runDuration = runDurationStr.toInt(),
+                    runDistance = runDistanceStr.toInt()
+                )
+
+                runViewModel.addRun(runInput)
+                findNavController().popBackStack()
+            } else {
+                // Opsional: Tambahkan Toast atau error message jika input kosong
+                if (runDate.isEmpty()) binding.tilDate.error = "Isi tanggal"
+                if (runDistanceStr.isEmpty()) binding.tilDistance.error = "Isi jarak"
+                if (runDurationStr.isEmpty()) binding.tilDuration.error = "Isi durasi"
+            }
         }
     }
 }

@@ -7,6 +7,8 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
+import com.upn.catatlari.R
 import com.upn.catatlari.databinding.FragmentLoginBinding
 import com.upn.catatlari.model.User
 
@@ -14,35 +16,42 @@ class LoginFragment : Fragment() {
 
     private lateinit var loginBinding: FragmentLoginBinding
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
-        // Inflate the layout for this fragment
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
         loginBinding = FragmentLoginBinding.inflate(inflater, container, false)
-
         return loginBinding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        loginBinding.buttonLogin.setOnClickListener {
+        // Logika Tombol Login
+        loginBinding.btnGoToHome.setOnClickListener {
             val emailUser = loginBinding.etEmail.text.toString()
             val passwordUser = loginBinding.etPassword.text.toString()
 
-            if (emailUser.isEmpty() || passwordUser.isEmpty())
+            if (emailUser.isEmpty() || passwordUser.isEmpty()) {
                 Toast.makeText(requireContext(), "Silahkan masukkan email/password, bro!", Toast.LENGTH_SHORT).show()
-            else {
-                // jika password salah, muncul pesan error
-                if (passwordUser != "123456")
+            } else {
+                if (passwordUser != "123456") {
                     Toast.makeText(requireContext(), "Password Anda salah!", Toast.LENGTH_SHORT).show()
-                // jika password benar, maka berpindah ke MainActivity
-                else {
-                    // berpindah ke MainActivity
+                } else {
+                    // Navigasi ke MainActivity jika login sukses
                     val intent = Intent(requireContext(), MainActivity::class.java)
                     intent.putExtra("user", User(email = emailUser, password = passwordUser))
                     startActivity(intent)
+                    activity?.finish()
                 }
             }
+        }
 
+        // Logika Klik Teks/Tombol Sign Up (Bawah)
+        loginBinding.btnGoToRegister.setOnClickListener {
+            // Memanggil ID action yang sudah dibuat di auth_nav.xml
+            findNavController().navigate(R.id.action_loginFragment_to_registerFragment)
         }
     }
 }

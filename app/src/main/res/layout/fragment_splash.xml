@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/black">
+
+    <!-- Teks Utama: KINETIC -->
+    <TextView
+        android:id="@+id/tv_kinetic_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="KINETIC"
+        android:textColor="@color/neon_green"
+        android:textSize="54sp"
+        android:textStyle="bold|italic"
+        android:letterSpacing="0.2"
+        android:fontFamily="@font/lexend_regular"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.45"
+
+        android:shadowColor="#CCFF00"
+        android:shadowDx="0"
+        android:shadowDy="0"
+        android:shadowRadius="15" />
+
+
+    <!-- Slogan: PUSH YOUR LIMITS -->
+    <TextView
+        android:id="@+id/tv_kinetic_slogan"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="PUSH YOUR LIMITS"
+        android:textColor="@color/white"
+        android:textSize="14sp"
+        android:letterSpacing="0.5"
+        android:fontFamily="@font/lexend_regular"
+        app:layout_constraintEnd_toEndOf="@+id/tv_kinetic_title"
+        app:layout_constraintStart_toStartOf="@+id/tv_kinetic_title"
+        app:layout_constraintTop_toBottomOf="@+id/tv_kinetic_title" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

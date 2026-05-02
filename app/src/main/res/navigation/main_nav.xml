@@ -6,6 +6,7 @@
     android:id="@+id/main_nav"
     app:startDestination="@id/homeFragment">
 
+    <!-- 1. Fragment Home (Utama) -->
     <fragment
         android:id="@+id/homeFragment"
         android:name="com.upn.catatlari.view.HomeFragment"
@@ -15,14 +16,37 @@
             android:id="@+id/action_homeFragment_to_addRunFragment"
             app:destination="@id/addRunFragment" />
     </fragment>
+
+    <!-- 2. Fragment Tambah Catatan Lari -->
     <fragment
         android:id="@+id/addRunFragment"
         android:name="com.upn.catatlari.view.AddRunFragment"
         android:label="fragment_add_run"
         tools:layout="@layout/fragment_add_run" />
+
+    <!-- 3. Fragment Profile -->
     <fragment
         android:id="@+id/profileFragment"
         android:name="com.upn.catatlari.view.ProfileFragment"
         android:label="fragment_profile"
-        tools:layout="@layout/fragment_profile" />
+        tools:layout="@layout/fragment_profile">
+        <action
+            android:id="@+id/action_profileFragment_to_editProfileFragment"
+            app:destination="@id/editProfileFragment" />
+    </fragment>
+
+    <!-- 4. Fragment Edit Profile -->
+    <fragment
+        android:id="@+id/editProfileFragment"
+        android:name="com.upn.catatlari.view.EditProfileFragment"
+        android:label="fragment_edit_profile"
+        tools:layout="@layout/fragment_edit_profile" />
+
+    <!-- 5. Fragment History (BARU) -->
+    <fragment
+        android:id="@+id/historyFragment"
+        android:name="com.upn.catatlari.view.HistoryFragment"
+        android:label="fragment_history"
+        tools:layout="@layout/fragment_history" />
+
 </navigation>

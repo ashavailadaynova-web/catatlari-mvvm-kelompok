@@ -1,0 +1,12 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+
+    <!-- Style untuk Gambar Profil Lingkaran -->
+    <style name="CircleImage" parent="">
+        <item name="cornerSize">50%</item>
+    </style>
+
+    <!-- Style Utama Aplikasi kamu (pastikan tetap ada) -->
+    <style name="Theme.Catatlari" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+        <!-- ... item lainnya ... -->
+    </style>
+</resources>

@@ -24,7 +24,9 @@ class HomeFragment : Fragment() {
         binding.welcomingTxt.text = "Halo, ${user?.email}"
 
         binding.floatingBtnAddRun.setOnClickListener {
-            findNavController().navigate(HomeFragmentDirections.Companion.actionHomeFragmentToAddRunFragment())
+            // Pastikan ID action di nav_graph adalah action_homeFragment_to_addRunFragment
+            val action = HomeFragmentDirections.actionHomeFragmentToAddRunFragment()
+            findNavController().navigate(action)
         }
 
         // Inisialisasi Adapter dengan dua aksi (Hapus otomatis dari ViewModel, Edit diarahkan dengan Navigation)
