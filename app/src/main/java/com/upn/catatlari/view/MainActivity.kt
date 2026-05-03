@@ -20,6 +20,7 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        // Ambil data email dari intent
         val email = intent.getStringExtra("email")
 
         user = if (email.isNullOrEmpty()) {
@@ -33,22 +34,28 @@ class MainActivity : AppCompatActivity() {
             )
         }
 
-        val navHostFragment =
-            supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
+        // Inisialisasi Navigation Component dengan aman
+        val navHostFragment = supportFragmentManager
+            .findFragmentById(R.id.nav_host_fragment) as? NavHostFragment
 
-        val navController = navHostFragment.navController
+        if (navHostFragment != null) {
+            val navController = navHostFragment.navController
 
-        binding.bottomNavMenu.setupWithNavController(navController)
+            // Hubungkan Bottom Navigation
+            binding.bottomNavMenu.setupWithNavController(navController)
 
-        navController.addOnDestinationChangedListener { _, destination, _ ->
-            when (destination.id) {
-                R.id.addRunFragment,
-                R.id.editProfileFragment -> {
-                    binding.bottomNavMenu.visibility = View.GONE
-                }
-
-                else -> {
-                    binding.bottomNavMenu.visibility = View.VISIBLE
+            // Atur kapan BottomNav muncul atau hilang
+            navController.addOnDestinationChangedListener { _, destination, _ ->
+                when (destination.id) {
+                    R.id.addRunFragment,
+                    R.id.editProfileFragment,
+                    R.id.splashFragment, // Tambahkan ini jika ada splash
+                    R.id.loginFragment -> { // Tambahkan ini jika login ada di nav yang sama
+                        binding.bottomNavMenu.visibility = View.GONE
+                    }
+                    else -> {
+                        binding.bottomNavMenu.visibility = View.VISIBLE
+                    }
                 }
             }
         }

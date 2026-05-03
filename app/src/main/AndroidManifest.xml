@@ -13,19 +13,15 @@
 
         <activity
             android:name=".view.MainActivity"
-            android:exported="false"
-            android:theme="@style/Theme.CatatLari" />
+            android:exported="false" />
 
         <activity
             android:name=".view.AuthActivity"
-            android:exported="true"
-            android:theme="@style/Theme.CatatLari">
-
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-
         </activity>
 
     </application>
