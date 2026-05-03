@@ -1,7 +1,9 @@
 package com.upn.catatlari.viewmodel
 
 import android.app.Application
-import androidx.lifecycle.*
+import androidx.lifecycle.AndroidViewModel
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.viewModelScope
 import com.upn.catatlari.database.RunDatabase
 import com.upn.catatlari.model.Run
 import com.upn.catatlari.repository.RunRepository
@@ -21,6 +23,12 @@ class RunViewModel(application: Application) : AndroidViewModel(application) {
     fun addRun(run: Run) {
         viewModelScope.launch {
             repository.insertRun(run)
+        }
+    }
+
+    fun updateRun(run: Run) {
+        viewModelScope.launch {
+            repository.updateRun(run)
         }
     }
 

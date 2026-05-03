@@ -47,7 +47,7 @@ class RunAdapter(
         fun bind(run: Run) {
             binding.txtRunDate.text = run.runDate
             binding.txtRunDistance.text = "${run.runDistance} M"
-            binding.txtRunDuration.text = "${run.runDuration} menit"
+            binding.txtRunDuration.text = run.runDuration
         }
     }
 }

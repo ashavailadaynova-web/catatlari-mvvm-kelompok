@@ -12,6 +12,9 @@ class RunRepository(private val runDao: RunDao) {
         runDao.insertRun(run)
     }
 
+    suspend fun updateRun(run: Run) {
+        runDao.updateRun(run)
+    }
     suspend fun deleteRun(run: Run) {
         runDao.deleteRun(run)
     }

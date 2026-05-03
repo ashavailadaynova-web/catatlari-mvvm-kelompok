@@ -30,9 +30,9 @@ class HomeFragment : Fragment() {
         }
         // Inisialisasi Adapter dengan dua aksi (Hapus otomatis dari ViewModel, Edit diarahkan dengan Navigation)
         val runAdapter = RunAdapter(runViewModel) { runToEdit ->
-            // Aksi saat tombol Edit di-klik
-            val action = R.id.action_homeFragment_to_addRunFragment
-            findNavController().navigate(action)
+            val bundle = Bundle()
+            bundle.putParcelable("run", runToEdit)
+            findNavController().navigate(R.id.action_homeFragment_to_addRunFragment, bundle)
         }
 
         binding.rvRunList.layoutManager = LinearLayoutManager(requireContext())
