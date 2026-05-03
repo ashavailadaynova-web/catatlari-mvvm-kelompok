@@ -1,12 +1,12 @@
 package com.upn.catatlari.model
 
-import androidx.room.Entity
-import androidx.room.PrimaryKey
+import android.os.Parcelable
+import kotlinx.parcelize.Parcelize
 
-@Entity(tableName = "user_table")
+@Parcelize
 data class User(
-    @PrimaryKey
     val email: String,
-    val name: String,
-    val city: String
-)
+    val password: String,
+    val name: String = "",
+    val city: String = ""
+) : Parcelable

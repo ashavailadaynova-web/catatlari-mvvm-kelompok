@@ -37,7 +37,7 @@ class HomeFragment : Fragment() {
         }
 
         binding.rvRunList.layoutManager = LinearLayoutManager(requireContext())
-        runViewModel.runHistory.observe(viewLifecycleOwner) { runList ->
+        runViewModel.getRuns().observe(viewLifecycleOwner) { runList ->
             runAdapter.setData(runList)
         }
 
