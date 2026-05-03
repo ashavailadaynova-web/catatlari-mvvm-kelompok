@@ -7,13 +7,16 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import com.upn.catatlari.R
 import com.upn.catatlari.databinding.FragmentLoginBinding
+import com.upn.catatlari.viewmodel.UserViewModel
 
 class LoginFragment : Fragment() {
 
     private lateinit var loginBinding: FragmentLoginBinding
+    private val userViewModel: UserViewModel by activityViewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -28,17 +31,28 @@ class LoginFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         loginBinding.btnGoToHome.setOnClickListener {
-            val emailUser = loginBinding.etEmail.text.toString()
+            val emailUser = loginBinding.etEmail.text.toString().trim()
             val passwordUser = loginBinding.etPassword.text.toString()
 
             if (emailUser.isEmpty() || passwordUser.isEmpty()) {
-                Toast.makeText(requireContext(), "Silahkan masukkan email/password, bro!", Toast.LENGTH_SHORT).show()
-            } else {
-                if (passwordUser != "123456") {
-                    Toast.makeText(requireContext(), "Password Anda salah!", Toast.LENGTH_SHORT).show()
+                Toast.makeText(
+                    requireContext(),
+                    "Silahkan masukkan email dan password",
+                    Toast.LENGTH_SHORT
+                ).show()
+                return@setOnClickListener
+            }
+
+            userViewModel.login(emailUser, passwordUser) { user ->
+                if (user == null) {
+                    Toast.makeText(
+                        requireContext(),
+                        "Email / Password salah",
+                        Toast.LENGTH_SHORT
+                    ).show()
                 } else {
                     val intent = Intent(requireContext(), MainActivity::class.java)
-                    intent.putExtra("email", emailUser)
+                    intent.putExtra("email", user.email)
                     startActivity(intent)
                     requireActivity().finish()
                 }
