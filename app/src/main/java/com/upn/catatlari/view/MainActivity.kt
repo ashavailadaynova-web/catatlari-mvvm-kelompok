@@ -1,10 +1,8 @@
 package com.upn.catatlari.view
 
-import android.os.Build
 import android.os.Bundle
 import android.view.View
 import androidx.activity.enableEdgeToEdge
-import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
@@ -19,13 +17,13 @@ class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
     var user: User? = null
 
-    @RequiresApi(Build.VERSION_CODES.TIRAMISU)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         binding = ActivityMainBinding.inflate(layoutInflater)
 
-        user = intent.getParcelableExtra("user")
+        val email = intent.getStringExtra("email") ?: ""
+        user = User(email = email, password = "")
 
         enableEdgeToEdge()
         setContentView(binding.root)
@@ -36,19 +34,17 @@ class MainActivity : AppCompatActivity() {
             insets
         }
 
-        val navHostFragment = supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
+        val navHostFragment =
+            supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
+
         val navController = navHostFragment.navController
 
-        // Hubungkan Bottom Navigation
         binding.bottomNavMenu.setupWithNavController(navController)
 
-        // Logika untuk menyembunyikan/menampilkan Nav Menu di halaman tertentu
         navController.addOnDestinationChangedListener { _, destination, _ ->
             if (destination.id == R.id.editProfileFragment) {
-                // Sembunyikan menu saat di halaman Edit Profile
                 binding.bottomNavMenu.visibility = View.GONE
             } else {
-                // Tampilkan menu di Home dan Profile
                 binding.bottomNavMenu.visibility = View.VISIBLE
             }
         }
