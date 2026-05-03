@@ -9,7 +9,6 @@ import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.upn.catatlari.databinding.FragmentHomeBinding
-import com.upn.catatlari.model.Run
 import com.upn.catatlari.viewmodel.RunViewModel
 
 class HomeFragment : Fragment() {
@@ -25,10 +24,24 @@ class HomeFragment : Fragment() {
         binding.welcomingTxt.text = "Halo, ${user?.email}"
 
         binding.floatingBtnAddRun.setOnClickListener {
-            findNavController().navigate(HomeFragmentDirections.Companion.actionHomeFragmentToAddRunFragment())
+            // Pastikan ID action di nav_graph adalah action_homeFragment_to_addRunFragment
+            val action = HomeFragmentDirections.actionHomeFragmentToAddRunFragment()
+            findNavController().navigate(action)
         }
 
-        val runAdapter = RunAdapter()
+        // Inisialisasi Adapter dengan dua aksi (Hapus otomatis dari ViewModel, Edit diarahkan dengan Navigation)
+        val runAdapter = RunAdapter(runViewModel) { runToEdit ->
+            // Aksi saat tombol Edit di-klik
+            val action = HomeFragmentDirections.actionHomeFragmentToAddRunFragment()
+            findNavController().navigate(action)
+        }
+
+        binding.rvRunList.layoutManager = LinearLayoutManager(requireContext())
+        runViewModel.runHistory.observe(viewLifecycleOwner) { runList ->
+            runAdapter.setData(runList)
+        }
+
+        binding.rvRunList.adapter = runAdapter
 
         binding.rvRunList.layoutManager = LinearLayoutManager(requireContext())
         runViewModel.runHistory.observe(viewLifecycleOwner) { runList ->

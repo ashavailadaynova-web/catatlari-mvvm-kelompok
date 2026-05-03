@@ -1,11 +1,14 @@
 package com.upn.catatlari.database
 
+import android.content.Context
 import androidx.lifecycle.LiveData
 import androidx.room.*
 import com.upn.catatlari.model.Run
 
 @Dao
 interface RunDao {
+
+    val applicationContext: Context
 
     @Insert
     suspend fun insertRun(run: Run)

@@ -1,65 +1,104 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.cardview.widget.CardView
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginTop="6dp">
-    <LinearLayout
-        android:layout_marginTop="3dp"
-        android:padding="16dp"
+    android:layout_marginBottom="12dp"
+    app:cardBackgroundColor="#1A1A1A"
+    app:cardCornerRadius="16dp"
+    app:cardElevation="0dp">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:padding="16dp">
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Tanggal Lari"
-            android:textColor="@color/black"
-            android:textStyle="bold"/>
+        <!-- Tanggal di pojok kiri atas -->
         <TextView
             android:id="@+id/txt_run_date"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="6dp"
-            android:text="22-03-2025"/>
+            android:text="22-03-2025"
+            android:textColor="#888888"
+            android:textSize="12sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
+        <!-- Info Jarak -->
         <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:text="Jarak Lari"
-            android:textColor="@color/black"
-            android:textStyle="bold"/>
-        <TextView
-            android:id="@+id/txt_run_distance"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="6dp"
-            android:text="22-03-2025"/>
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:text="Durasi Lari"
-            android:textColor="@color/black"
-            android:textStyle="bold"/>
-        <TextView
-            android:id="@+id/txt_run_duration"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="6dp"
-            android:text="22-03-2025"/>
-
-        <Button
-            android:id="@+id/btn_delete_run"
-            android:layout_width="match_parent"
+            android:id="@+id/label_jarak"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="12dp"
-            android:text="Hapus Data"
-            android:backgroundTint="#D32F2F"
-            android:textColor="@android:color/white" />
+            android:text="Jarak Lari"
+            android:textColor="#FFFFFF"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/txt_run_date" />
 
-    </LinearLayout>
+        <TextView
+            android:id="@+id/txt_run_distance"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="5.2 KM"
+            android:textColor="#D4FF00"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/label_jarak" />
+
+        <!-- Info Durasi -->
+        <TextView
+            android:id="@+id/label_durasi"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="32dp"
+            android:text="Durasi"
+            android:textColor="#FFFFFF"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toTopOf="@+id/txt_run_duration"
+            app:layout_constraintStart_toEndOf="@id/label_jarak" />
+
+        <TextView
+            android:id="@+id/txt_run_duration"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="00:30:45"
+            android:textColor="#D4FF00"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="@+id/txt_run_distance"
+            app:layout_constraintStart_toStartOf="@id/label_durasi" />
+
+        <!-- Tombol Aksi di Kanan -->
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent">
+
+            <Button
+                android:id="@+id/btnEditRun"
+                style="@style/Widget.MaterialComponents.Button.TextButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Edit"
+                android:textColor="#D4FF00"
+                android:textSize="12sp" />
+
+            <Button
+                android:id="@+id/btnDeleteRun"
+                style="@style/Widget.MaterialComponents.Button.TextButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Hapus"
+                android:textColor="#FF5252"
+                android:textSize="12sp" />
+        </LinearLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.cardview.widget.CardView>
