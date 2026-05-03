@@ -25,7 +25,7 @@ class MainActivity : AppCompatActivity() {
 
         binding = ActivityMainBinding.inflate(layoutInflater)
 
-        user = intent.getParcelableExtra("user", User::class.java)
+        user = intent.getParcelableExtra("user")
 
         enableEdgeToEdge()
         setContentView(binding.root)

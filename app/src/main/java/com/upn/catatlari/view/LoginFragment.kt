@@ -43,7 +43,7 @@ class LoginFragment : Fragment() {
                     val intent = Intent(requireContext(), MainActivity::class.java)
                     intent.putExtra("user", User(email = emailUser, password = passwordUser))
                     startActivity(intent)
-                    activity?.finish()
+                    requireActivity().finish() // ← TAMBAH INi
                 }
             }
         }

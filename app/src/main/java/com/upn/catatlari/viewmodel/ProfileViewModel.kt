@@ -1,17 +1,20 @@
 package com.upn.catatlari.viewmodel
 
-import androidx.lifecycle.*
+import androidx.lifecycle.ViewModel
 import com.upn.catatlari.model.User
-import com.upn.catatlari.repository.UserRepository
-import kotlinx.coroutines.launch
 
-class ProfileViewModel(private val repository: UserRepository) : ViewModel() {
+class ProfileViewModel : ViewModel() {
 
-    fun getUserData(email: String): LiveData<User> = repository.getUserByEmail(email)
+    fun getUserByEmail(email: String): User {
+        return User(
+            email = email,
+            password = "",
+            name = "",
+            city = ""
+        )
+    }
 
     fun updateUser(email: String, name: String, city: String) {
-        viewModelScope.launch {
-            repository.updateUser(email, name, city)
-        }
+        // sementara kosong dulu, karena database dimatikan
     }
 }

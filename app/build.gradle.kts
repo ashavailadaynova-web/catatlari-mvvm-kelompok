@@ -2,16 +2,13 @@ plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.navigation.safeargs)
     alias(libs.plugins.kotlin.parcelize)
-    alias(libs.plugins.ksp)
-    // Memastikan plugin kotlin android terdeteksi agar kotlinOptions dikenali
-    id("org.jetbrains.kotlin.android")
 }
 
 android {
     namespace = "com.upn.catatlari"
 
     // Perbaikan penulisan compileSdk agar lebih stabil
-    compileSdk = 34
+    compileSdk = 36
 
     buildFeatures {
         viewBinding = true
@@ -20,7 +17,7 @@ android {
     defaultConfig {
         applicationId = "com.upn.catatlari"
         minSdk = 27
-        targetSdk = 34
+        targetSdk = 36
         versionCode = 1
         versionName = "1.0"
 
@@ -43,9 +40,9 @@ android {
     }
 
     // Menggunakan syntax eksplisit agar tidak "Unresolved reference"
-    kotlinOptions {
-        (this as org.jetbrains.kotlin.gradle.dsl.KotlinJvmOptions).jvmTarget = "17"
-    }
+//    kotlinOptions {
+//        (this as org.jetbrains.kotlin.gradle.dsl.KotlinJvmOptions).jvmTarget = "17"
+//    }
 }
 
 dependencies {
@@ -56,9 +53,9 @@ dependencies {
     implementation(libs.androidx.constraintlayout)
 
     // Room Database
-    implementation("androidx.room:room-runtime:2.6.1")
-    implementation("androidx.room:room-ktx:2.6.1")
-    ksp("androidx.room:room-compiler:2.6.1")
+//    implementation("androidx.room:room-runtime:2.6.1")
+//    implementation("androidx.room:room-ktx:2.6.1")
+//    ksp("androidx.room:room-compiler:2.6.1")
 
     // Navigation - Versi 2.7.7 lebih stabil untuk jvmTarget 17
     implementation("androidx.navigation:navigation-fragment-ktx:2.7.7")
