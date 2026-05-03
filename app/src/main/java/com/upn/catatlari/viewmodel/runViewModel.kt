@@ -24,6 +24,12 @@ class RunViewModel(application: Application) : AndroidViewModel(application) {
         }
     }
 
+    fun updateRun(run: Run) {
+        viewModelScope.launch {
+            repository.updateRun(run)
+        }
+    }
+
     fun deleteRun(run: Run) {
         viewModelScope.launch {
             repository.deleteRun(run)

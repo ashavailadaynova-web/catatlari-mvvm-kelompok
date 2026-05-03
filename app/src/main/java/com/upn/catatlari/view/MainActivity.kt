@@ -1,13 +1,8 @@
 package com.upn.catatlari.view
 
-import android.os.Build
 import android.os.Bundle
 import android.view.View
-import androidx.activity.enableEdgeToEdge
-import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
 import com.upn.catatlari.R
@@ -19,37 +14,49 @@ class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
     var user: User? = null
 
-    @RequiresApi(Build.VERSION_CODES.TIRAMISU)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         binding = ActivityMainBinding.inflate(layoutInflater)
-
-        user = intent.getParcelableExtra("user")
-
-        enableEdgeToEdge()
         setContentView(binding.root)
 
-        ViewCompat.setOnApplyWindowInsetsListener(binding.main) { v, insets ->
-            val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, 0)
-            insets
+        // Ambil data email dari intent
+        val email = intent.getStringExtra("email")
+
+        user = if (email.isNullOrEmpty()) {
+            null
+        } else {
+            User(
+                email = email,
+                password = "",
+                name = "",
+                city = ""
+            )
         }
 
-        val navHostFragment = supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
-        val navController = navHostFragment.navController
+        // Inisialisasi Navigation Component dengan aman
+        val navHostFragment = supportFragmentManager
+            .findFragmentById(R.id.nav_host_fragment) as? NavHostFragment
 
-        // Hubungkan Bottom Navigation
-        binding.bottomNavMenu.setupWithNavController(navController)
+        if (navHostFragment != null) {
+            val navController = navHostFragment.navController
 
-        // Logika untuk menyembunyikan/menampilkan Nav Menu di halaman tertentu
-        navController.addOnDestinationChangedListener { _, destination, _ ->
-            if (destination.id == R.id.editProfileFragment) {
-                // Sembunyikan menu saat di halaman Edit Profile
-                binding.bottomNavMenu.visibility = View.GONE
-            } else {
-                // Tampilkan menu di Home dan Profile
-                binding.bottomNavMenu.visibility = View.VISIBLE
+            // Hubungkan Bottom Navigation
+            binding.bottomNavMenu.setupWithNavController(navController)
+
+            // Atur kapan BottomNav muncul atau hilang
+            navController.addOnDestinationChangedListener { _, destination, _ ->
+                when (destination.id) {
+                    R.id.addRunFragment,
+                    R.id.editProfileFragment,
+                    R.id.splashFragment, // Tambahkan ini jika ada splash
+                    R.id.loginFragment -> { // Tambahkan ini jika login ada di nav yang sama
+                        binding.bottomNavMenu.visibility = View.GONE
+                    }
+                    else -> {
+                        binding.bottomNavMenu.visibility = View.VISIBLE
+                    }
+                }
             }
         }
     }

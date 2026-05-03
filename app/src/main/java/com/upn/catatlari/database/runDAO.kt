@@ -13,6 +13,9 @@ interface RunDao {
     @Query("SELECT * FROM run_table ORDER BY id DESC")
     fun getAllRuns(): LiveData<List<Run>>
 
+    @Update
+    suspend fun updateRun(run: Run)
+
     @Delete
     suspend fun deleteRun(run: Run)
 }

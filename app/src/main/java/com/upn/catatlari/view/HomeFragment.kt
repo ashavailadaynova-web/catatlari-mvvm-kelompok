@@ -8,48 +8,45 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.upn.catatlari.R
 import com.upn.catatlari.databinding.FragmentHomeBinding
 import com.upn.catatlari.viewmodel.RunViewModel
-import com.upn.catatlari.R
 
 class HomeFragment : Fragment() {
 
     private lateinit var binding: FragmentHomeBinding
     private val runViewModel: RunViewModel by activityViewModels()
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        // Inflate the layout for this fragment
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
         binding = FragmentHomeBinding.inflate(inflater, container, false)
-
-        val user = (activity as MainActivity).user
-        binding.welcomingTxt.text = "Halo, ${user?.email}"
-
-        binding.floatingBtnAddRun.setOnClickListener {
-            // Pastikan ID action di nav_graph adalah action_homeFragment_to_addRunFragment
-            findNavController().navigate(R.id.action_homeFragment_to_addRunFragment)
-        }
-        // Inisialisasi Adapter dengan dua aksi (Hapus otomatis dari ViewModel, Edit diarahkan dengan Navigation)
-        val runAdapter = RunAdapter(runViewModel) { runToEdit ->
-            // Aksi saat tombol Edit di-klik
-            val action = R.id.action_homeFragment_to_addRunFragment
-            findNavController().navigate(action)
-        }
-
-        binding.rvRunList.layoutManager = LinearLayoutManager(requireContext())
-        runViewModel.runHistory.observe(viewLifecycleOwner) { runList ->
-            runAdapter.setData(runList)
-        }
-
-        binding.rvRunList.adapter = runAdapter
-
-        binding.rvRunList.layoutManager = LinearLayoutManager(requireContext())
-        runViewModel.runHistory.observe(viewLifecycleOwner) { runList ->
-            runAdapter.setData(runList)
-        }
-
-        binding.rvRunList.adapter = runAdapter
-
         return binding.root
     }
 
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        val email = requireActivity().intent.getStringExtra("email") ?: "User"
+        binding.welcomingTxt.text = "Halo, $email"
+
+        val runAdapter = RunAdapter(runViewModel) { runToEdit ->
+            val bundle = Bundle()
+            bundle.putParcelable("run", runToEdit)
+            findNavController().navigate(R.id.action_homeFragment_to_addRunFragment, bundle)
+        }
+
+        binding.rvRunList.layoutManager = LinearLayoutManager(requireContext())
+        binding.rvRunList.adapter = runAdapter
+
+        runViewModel.runHistory.observe(viewLifecycleOwner) { runList ->
+            runAdapter.setData(runList)
+        }
+
+        binding.floatingBtnAddRun.setOnClickListener {
+            findNavController().navigate(R.id.action_homeFragment_to_addRunFragment)
+        }
+    }
 }
