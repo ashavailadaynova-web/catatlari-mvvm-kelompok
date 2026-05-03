@@ -1,6 +1,5 @@
 plugins {
     alias(libs.plugins.android.application)
-    alias(libs.plugins.navigation.safeargs)
     alias(libs.plugins.kotlin.parcelize)
 }
 
@@ -53,9 +52,9 @@ dependencies {
     implementation(libs.androidx.constraintlayout)
 
     // Room Database
-//    implementation("androidx.room:room-runtime:2.6.1")
-//    implementation("androidx.room:room-ktx:2.6.1")
-//    ksp("androidx.room:room-compiler:2.6.1")
+//    implementation("androidx.room:room-runtime:2.7.2")
+//    implementation("androidx.room:room-ktx:2.7.2")
+//    add("ksp", "androidx.room:room-compiler:2.7.2")
 
     // Navigation - Versi 2.7.7 lebih stabil untuk jvmTarget 17
     implementation("androidx.navigation:navigation-fragment-ktx:2.7.7")

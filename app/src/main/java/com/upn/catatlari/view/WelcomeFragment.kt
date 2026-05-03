@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.upn.catatlari.databinding.FragmentWelcomeBinding
+import com.upn.catatlari.R
 
 class WelcomeFragment : Fragment() {
 
@@ -27,13 +28,13 @@ class WelcomeFragment : Fragment() {
 
         // Aksi tombol Signup (Get Started)
         binding.btnSignup.setOnClickListener {
-            val action = WelcomeFragmentDirections.actionWelcomeFragmentToRegisterFragment()
+            val action = R.id.action_welcomeFragment_to_registerFragment
             findNavController().navigate(action)
         }
 
         // Aksi tombol Login
         binding.btnLogin.setOnClickListener {
-            val action = WelcomeFragmentDirections.actionWelcomeFragmentToLoginFragment()
+            val action = R.id.action_welcomeFragment_to_loginFragment
             findNavController().navigate(action)
         }
     }
